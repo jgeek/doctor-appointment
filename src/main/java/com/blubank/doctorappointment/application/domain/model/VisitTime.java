@@ -12,6 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Value
 public class VisitTime {
+    VisitTimeId id;
     LocalDateTime start;
     LocalDateTime end;
+    Patient patient;
+
+    public boolean isTaken() {
+        return patient != null;
+    }
 }

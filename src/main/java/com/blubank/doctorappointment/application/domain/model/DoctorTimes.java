@@ -1,8 +1,10 @@
 package com.blubank.doctorappointment.application.domain.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -15,16 +17,26 @@ import java.util.stream.LongStream;
 public class DoctorTimes {
     public static final Long VISIT_PERIOD_MINUTES = 30L;
 
-    private final LocalDateTime openTime;
-    private final LocalDateTime endTime;
+    @Getter
+    private final DoctorTimesId id;
 
-    public List<VisitTime> generateTimes() {
+    @NotNull
+    @Getter
+    private final LocalDateTime openTime;
+    @NotNull
+    @Getter
+    private final LocalDateTime endTime;
+    @Getter
+    private List<VisitTime> visitTimes;
+
+    public void generateTimes() {
         var visitCount = (int) Duration.between(openTime, endTime).toMinutes() / VISIT_PERIOD_MINUTES;
-        List<VisitTime> times = LongStream.rangeClosed(1, visitCount)
-                .mapToObj(i -> VisitTime.builder().start(openTime.plusMinutes(VISIT_PERIOD_MINUTES * (i - 1)))
+        this.visitTimes = LongStream.rangeClosed(1, visitCount)
+                .mapToObj(i -> VisitTime.builder()
+                        .start(openTime.plusMinutes(VISIT_PERIOD_MINUTES * (i - 1)))
                         .end(openTime.plusMinutes(VISIT_PERIOD_MINUTES * i))
-                        .build())
+                        .build()
+                )
                 .toList();
-        return times;
     }
 }

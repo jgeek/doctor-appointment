@@ -18,7 +18,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class DoctorTimesTest {
 
-    private final OpenTimeService openTimeService = new OpenTimeService();
     private static final int Start_TIME = 10;
     private static final int END_TIME = 12;
 
@@ -28,7 +27,8 @@ public class DoctorTimesTest {
                 .openTime(openTime())
                 .endTime(endTime())
                 .build();
-        List<VisitTime> times = doctorTimes.generateTimes();
+        doctorTimes.generateTimes();
+        List<VisitTime> times = doctorTimes.getVisitTimes();
         assertThat(times, hasSize(4));
 
         var firstVisitTime = times.get(0);
@@ -46,7 +46,8 @@ public class DoctorTimesTest {
                 .openTime(openTime())
                 .endTime(endTime().plusMinutes(10))
                 .build();
-        List<VisitTime> times = doctorTimes.generateTimes();
+        doctorTimes.generateTimes();
+        List<VisitTime> times = doctorTimes.getVisitTimes();
         assertThat(times, hasSize(4));
     }
 
@@ -56,7 +57,8 @@ public class DoctorTimesTest {
                 .openTime(openTime())
                 .endTime(openTime().plusMinutes(29))
                 .build();
-        List<VisitTime> times = doctorTimes.generateTimes();
+        doctorTimes.generateTimes();
+        List<VisitTime> times = doctorTimes.getVisitTimes();
         assertThat(times, hasSize(0));
     }
 
