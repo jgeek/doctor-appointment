@@ -2,10 +2,12 @@ package com.blubank.doctorappointment.adapter.out.persistence;
 
 import com.blubank.doctorappointment.application.domain.model.PatientInfo;
 import com.blubank.doctorappointment.application.domain.model.VisitTime;
+import com.blubank.doctorappointment.application.domain.model.VisitTimeId;
 import com.blubank.doctorappointment.application.domain.model.VisitTimeInfo;
 import com.blubank.doctorappointment.application.port.out.LoadVisitTimePort;
 import com.blubank.doctorappointment.application.port.out.UpdateVisitTimePort;
 import com.blubank.doctorappointment.common.PersistenceAdapter;
+import com.blubank.doctorappointment.common.exception.NoEntityFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.Timestamp;
@@ -47,6 +49,12 @@ public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVis
                 .toList();
         return list;
 //        return mapper.mapToVisitTimeEntities(entities);
+    }
+
+    @Override
+    public VisitTime getById(VisitTimeId visitTimeId) {
+        return visitTimeRepository.findById(visitTimeId.id())
+                .map(mapper::mapToVisitTime).orElseThrow(() -> new NoEntityFoundException("visit time not found"));
     }
 
     private LocalDateTime toLocalDateTime(Object object) {

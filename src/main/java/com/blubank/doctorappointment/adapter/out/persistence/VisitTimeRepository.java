@@ -1,11 +1,13 @@
 package com.blubank.doctorappointment.adapter.out.persistence;
 
+import com.blubank.doctorappointment.application.domain.model.VisitTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface VisitTimeRepository extends JpaRepository<VisitTimeEntity, Long> {
     //    @Query("select t from VisitTimeEntity  t left join PatientEntity p on t.patientId = p.id  where t.openTime >= :start and t.endTime < :end")

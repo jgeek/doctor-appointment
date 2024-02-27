@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "visit_times")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class VisitTimeEntity extends BaseEntity {
     @Column(name = "start_time")
     private LocalDateTime openTime;
@@ -21,4 +21,7 @@ public class VisitTimeEntity extends BaseEntity {
 
     @Column(name = "patient_id")
     private Long patientId;
+
+    @Version
+    private Long version;
 }

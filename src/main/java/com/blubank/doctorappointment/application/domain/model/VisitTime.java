@@ -1,23 +1,25 @@
 package com.blubank.doctorappointment.application.domain.model;
 
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Value
+@Getter
 public class VisitTime {
-    VisitTimeId id;
-    LocalDateTime start;
-    LocalDateTime end;
-    PatientId patientId;
+    private VisitTimeId id;
+    private LocalDateTime start;
+    private LocalDateTime end;
+    private PatientId patientId;
+    private Long version;
 
     public boolean isTaken() {
         return patientId != null;
+    }
+
+    public void takeBy(PatientId patientId) {
+        this.patientId = patientId;
     }
 }
