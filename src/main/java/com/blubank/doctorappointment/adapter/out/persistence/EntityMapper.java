@@ -26,8 +26,14 @@ public class EntityMapper {
     }
 
     public VisitTimeEntity mapToVisitTimeEntity(VisitTime visitTime) {
-        return new VisitTimeEntity(visitTime.getStart(), visitTime.getEnd(),
-                visitTime.getPatientId() != null ? visitTime.getPatientId().getId() : null);
+        VisitTimeEntity entity = new VisitTimeEntity(visitTime.getStart(), visitTime.getEnd(),
+                visitTime.getPatientId() != null ? visitTime.getPatientId().getId() : null, visitTime.getVersion());
+        entity.setId(visitTime.getId() != null ? visitTime.getId().id() : null);
+        return entity;
+    }
+
+    private Long nullSave(VisitTimeId id) {
+        return id != null ? id.id() : null;
     }
 
     public VisitTime mapToVisitTime(VisitTimeEntity entity) {
@@ -36,6 +42,7 @@ public class EntityMapper {
                 .start(entity.getOpenTime())
                 .end(entity.getEndTime())
                 .patientId(entity.getPatientId() != null ? PatientId.of(entity.getPatientId()) : null)
+                .version(entity.getVersion())
                 .build();
     }
 
