@@ -1,6 +1,7 @@
 package com.blubank.doctorappointment.application.port.in;
 
-import java.time.LocalDateTime;
 
-public record DoctorOpenTimesQuery(LocalDateTime date) {
+import jakarta.validation.constraints.NotNull;
+
+public record DoctorOpenTimesQuery(@NotNull OpenTimeCommand.TimeDto dateTime) {
 }

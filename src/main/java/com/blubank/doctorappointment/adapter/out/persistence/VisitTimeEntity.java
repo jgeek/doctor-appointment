@@ -14,13 +14,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VisitTimeEntity extends BaseEntity {
-    @Column(name = "open_time")
+    @Column(name = "start_time")
     private LocalDateTime openTime;
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "patient_id")
     @Column(name = "patient_id")
     private Long patientId;
 }

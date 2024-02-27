@@ -32,9 +32,14 @@ public class EntityMapper {
 
     public VisitTime mapToVisitTime(VisitTimeEntity entity) {
         return VisitTime.builder()
+                .id(new VisitTimeId(entity.getId()))
                 .start(entity.getOpenTime())
                 .end(entity.getEndTime())
                 .patientId(entity.getPatientId() != null ? PatientId.of(entity.getPatientId()) : null)
                 .build();
+    }
+
+    public List<VisitTime> mapToVisitTimeEntities(List<VisitTimeEntity> entities) {
+        return entities.stream().map(this::mapToVisitTime).toList();
     }
 }

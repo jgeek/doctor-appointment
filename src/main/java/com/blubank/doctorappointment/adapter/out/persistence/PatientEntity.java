@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "doctor_times")
+@Table(name = "patients")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +15,4 @@ public class PatientEntity extends BaseEntity {
 
     private String name;
     private String phoneNumber;
-
 }

@@ -1,11 +1,15 @@
 package com.blubank.doctorappointment.adapter.out.persistence;
 
+import com.blubank.doctorappointment.application.domain.model.PatientInfo;
 import com.blubank.doctorappointment.application.domain.model.VisitTime;
+import com.blubank.doctorappointment.application.domain.model.VisitTimeInfo;
 import com.blubank.doctorappointment.application.port.out.LoadVisitTimePort;
 import com.blubank.doctorappointment.application.port.out.UpdateVisitTimePort;
 import com.blubank.doctorappointment.common.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -32,5 +36,20 @@ public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVis
     public List<VisitTime> loadDoctorTimes() {
         List<VisitTimeEntity> entities = visitTimeRepository.findAll();
         return entities.stream().map(mapper::mapToVisitTime).toList();
+    }
+
+    @Override
+    public List<VisitTimeInfo> loadDoctorTimes(LocalDateTime date) {
+        List<Object[]> entities = visitTimeRepository.findADayTimes(date, date.plusDays(1));
+        List<VisitTimeInfo> list = entities.stream()
+                .map(o -> new VisitTimeInfo(Long.valueOf(o[0].toString()), toLocalDateTime(o[1]), toLocalDateTime(o[2]),
+                        new PatientInfo((Long) o[3], (String) o[4], (String) o[5])))
+                .toList();
+        return list;
+//        return mapper.mapToVisitTimeEntities(entities);
+    }
+
+    private LocalDateTime toLocalDateTime(Object object) {
+        return ((Timestamp) object).toLocalDateTime();
     }
 }
