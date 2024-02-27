@@ -1,6 +1,8 @@
 package com.blubank.doctorappointment.application.domain.model;
 
-import com.blubank.doctorappointment.application.domain.service.OpenTimeService;
+import static com.blubank.doctorappointment.application.domain.model.TestData.*;
+
+import com.blubank.doctorappointment.application.domain.service.TimeGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,25 +12,23 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static com.blubank.doctorappointment.application.domain.model.DoctorTimes.VISIT_PERIOD_MINUTES;
+import static com.blubank.doctorappointment.config.AppConfig.VISIT_PERIOD_MINUTES;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class DoctorTimesTest {
+public class TimeGeneratorTest {
 
     private static final int Start_TIME = 10;
     private static final int END_TIME = 12;
 
+    private final TimeGenerator timeGenerator = new TimeGenerator();
+
     @Test
     public void should_split_times_correctly() {
-        DoctorTimes doctorTimes = DoctorTimes.builder()
-                .openTime(openTime())
-                .endTime(endTime())
-                .build();
-        doctorTimes.generateTimes();
-        List<VisitTime> times = doctorTimes.getVisitTimes();
+
+        List<VisitTime> times = timeGenerator.generate(openTime(), endTime());
         assertThat(times, hasSize(4));
 
         var firstVisitTime = times.get(0);
@@ -42,31 +42,13 @@ public class DoctorTimesTest {
 
     @Test
     public void should_split_times_correctly_if_has_less_than_30_minutes_part() {
-        DoctorTimes doctorTimes = DoctorTimes.builder()
-                .openTime(openTime())
-                .endTime(endTime().plusMinutes(10))
-                .build();
-        doctorTimes.generateTimes();
-        List<VisitTime> times = doctorTimes.getVisitTimes();
+        List<VisitTime> times = timeGenerator.generate(openTime(), endTime().plusMinutes(10));
         assertThat(times, hasSize(4));
     }
 
     @Test
     public void should_not_generate_visit_time_if_period_is_less_than_30_minutes() {
-        DoctorTimes doctorTimes = DoctorTimes.builder()
-                .openTime(openTime())
-                .endTime(openTime().plusMinutes(29))
-                .build();
-        doctorTimes.generateTimes();
-        List<VisitTime> times = doctorTimes.getVisitTimes();
+        List<VisitTime> times = timeGenerator.generate(openTime(), openTime().plusMinutes(29));
         assertThat(times, hasSize(0));
-    }
-
-    private LocalDateTime openTime() {
-        return LocalDateTime.of(LocalDate.now(), LocalTime.of(Start_TIME, 0));
-    }
-
-    private LocalDateTime endTime() {
-        return LocalDateTime.of(LocalDate.now(), LocalTime.of(END_TIME, 0));
     }
 }

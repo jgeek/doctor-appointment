@@ -1,5 +1,5 @@
 package com.blubank.doctorappointment.application.port.in;
 
-public interface OpenTimeServiceUserCase {
+public interface OpenTimeServiceUseCase {
     void openTimePeriod(OpenTimeCommand command);
 }

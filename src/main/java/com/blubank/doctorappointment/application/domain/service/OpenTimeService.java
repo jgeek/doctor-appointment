@@ -1,27 +1,27 @@
 package com.blubank.doctorappointment.application.domain.service;
 
-import com.blubank.doctorappointment.application.domain.model.DoctorTimes;
 import com.blubank.doctorappointment.application.port.in.OpenTimeCommand;
-import com.blubank.doctorappointment.application.port.in.OpenTimeServiceUserCase;
-import com.blubank.doctorappointment.application.port.out.UpdateDoctorTimePort;
+import com.blubank.doctorappointment.application.port.in.OpenTimeServiceUseCase;
+import com.blubank.doctorappointment.application.port.out.UpdateVisitTimePort;
 import com.blubank.doctorappointment.common.UseCase;
-import jakarta.transaction.Transactional;
+
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @RequiredArgsConstructor
 @UseCase
-@Transactional
-public class OpenTimeService implements OpenTimeServiceUserCase {
+public class OpenTimeService implements OpenTimeServiceUseCase {
 
-    private final UpdateDoctorTimePort updateVisitTimePort;
 
+    private final TimeGenerator timeGenerator;
+    private final UpdateVisitTimePort updateVisitTimePort;
+
+    @Transactional
     @Override
     public void openTimePeriod(OpenTimeCommand command) {
-        DoctorTimes doctorTimes = DoctorTimes.builder()
-                .openTime(command.open())
-                .endTime(command.end())
-                .build();
-        doctorTimes.generateTimes();
-        updateVisitTimePort.add(doctorTimes);
+        var visitTimes = timeGenerator.generate(command.open().getDate(), command.end().getDate());
+        updateVisitTimePort.addAll(visitTimes);
     }
 }

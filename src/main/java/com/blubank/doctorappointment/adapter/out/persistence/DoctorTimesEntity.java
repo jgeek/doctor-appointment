@@ -9,18 +9,18 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "doctor_times")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@Entity
+//@Table(name = "doctor_times")
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class DoctorTimesEntity extends BaseEntity {
 
-    @Column(name = "open_time")
-    private LocalDateTime openTime;
-    @Column(name = "end_time")
-    private LocalDateTime endTime;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
-    @JoinColumn
-    private List<VisitTimeEntity> visitTimes;
+//    @Column(name = "open_time")
+//    private LocalDateTime openTime;
+//    @Column(name = "end_time")
+//    private LocalDateTime endTime;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
+//    @JoinColumn
+//    private List<VisitTimeEntity> visitTimes;
 }

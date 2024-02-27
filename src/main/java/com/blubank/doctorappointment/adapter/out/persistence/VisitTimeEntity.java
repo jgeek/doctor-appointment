@@ -1,5 +1,6 @@
 package com.blubank.doctorappointment.adapter.out.persistence;
 
+import com.blubank.doctorappointment.application.domain.model.PatientId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,8 @@ public class VisitTimeEntity extends BaseEntity {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private PatientEntity patient;
+    //    @ManyToOne
+//    @JoinColumn(name = "patient_id")
+    @Column(name = "patient_id")
+    private Long patientId;
 }

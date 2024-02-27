@@ -15,9 +15,9 @@ public class VisitTime {
     VisitTimeId id;
     LocalDateTime start;
     LocalDateTime end;
-    Patient patient;
+    PatientId patientId;
 
     public boolean isTaken() {
-        return patient != null;
+        return patientId != null;
     }
 }
