@@ -19,8 +19,8 @@ public class VisitTimeEntity extends BaseEntity {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
-    @Column(name = "patient_id")
-    private Long patientId;
+    @Embedded
+    private PatientEntity patient;
 
     @Version
     private Long version;

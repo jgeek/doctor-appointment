@@ -4,7 +4,6 @@ import com.blubank.doctorappointment.application.domain.model.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class EntityMapper {
@@ -20,16 +19,18 @@ public class EntityMapper {
 //    }
 
     private PatientEntity toPatentEntity(Patient patient) {
-        PatientEntity entity = new PatientEntity(patient.getName(), patient.getPhoneNumber());
-        entity.setId(Optional.ofNullable(patient.getPatientId()).map(PatientId::getId).orElse(null));
-        return entity;
+        return new PatientEntity(patient.getName(), patient.getPhoneNumber());
     }
 
     public VisitTimeEntity mapToVisitTimeEntity(VisitTime visitTime) {
         VisitTimeEntity entity = new VisitTimeEntity(visitTime.getStart(), visitTime.getEnd(),
-                visitTime.getPatientId() != null ? visitTime.getPatientId().getId() : null, visitTime.getVersion());
+                toPatientEntity(visitTime.getPatient()), visitTime.getVersion());
         entity.setId(visitTime.getId() != null ? visitTime.getId().id() : null);
         return entity;
+    }
+
+    private PatientEntity toPatientEntity(Patient patient) {
+        return patient != null ? new PatientEntity(patient.getName(), patient.getPhoneNumber()) : null;
     }
 
     private Long nullSave(VisitTimeId id) {
@@ -41,9 +42,13 @@ public class EntityMapper {
                 .id(new VisitTimeId(entity.getId()))
                 .start(entity.getOpenTime())
                 .end(entity.getEndTime())
-                .patientId(entity.getPatientId() != null ? PatientId.of(entity.getPatientId()) : null)
+                .patient(toPatient(entity.getPatient()))
                 .version(entity.getVersion())
                 .build();
+    }
+
+    private Patient toPatient(PatientEntity patient) {
+        return patient != null ? new Patient(patient.getName(), patient.getPhoneNumber()) : null;
     }
 
     public List<VisitTime> mapToVisitTimeEntities(List<VisitTimeEntity> entities) {

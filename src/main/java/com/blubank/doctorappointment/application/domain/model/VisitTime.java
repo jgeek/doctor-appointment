@@ -12,14 +12,14 @@ public class VisitTime {
     private VisitTimeId id;
     private LocalDateTime start;
     private LocalDateTime end;
-    private PatientId patientId;
+    private Patient patient;
     private Long version;
 
     public boolean isTaken() {
-        return patientId != null;
+        return patient != null;
     }
 
-    public void takeBy(PatientId patientId) {
-        this.patientId = patientId;
+    public void takeBy(Patient patient) {
+        this.patient = patient;
     }
 }

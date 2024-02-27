@@ -1,18 +1,19 @@
 package com.blubank.doctorappointment.adapter.out.persistence;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "patients")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientEntity extends BaseEntity {
+@Embeddable
+public class PatientEntity {
 
+    @Column(name = "name")
     private String name;
+    @Column(name = "phone_number")
     private String phoneNumber;
 }

@@ -10,5 +10,5 @@ public class VisitTimeInfo {
     Long id;
     LocalDateTime start;
     LocalDateTime end;
-    PatientInfo patient;
+    Patient patient;
 }

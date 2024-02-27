@@ -11,15 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import org.mockito.Captor;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDateTime;
-
 import static com.blubank.doctorappointment.application.domain.model.TestData.*;
 
 @SpringBootTest
@@ -34,22 +25,23 @@ public class TakeAppointmentServiceTest {
 
     private static final VisitTimeId VISIT_ID = new VisitTimeId(1L);
     private static final PatientId PATIENT_ID = PatientId.of(1L);
-
+    private VisitTimeInfo visitTime;
 
     @BeforeEach
     public void init() {
         OpenTimeCommand command = new OpenTimeCommand(timeOf(openTime()), timeOf(endTime()));
         openTimeServiceUseCase.openTimePeriod(command);
+        visitTime = loadVisitTimePort.loadDoctorTimes(openTime()).get(0);
     }
 
     @Test
     public void patient_take_an_appointment() {
-        TakeAppointmentCommand takeCommand = new TakeAppointmentCommand(PatientId.of(1L), VISIT_ID);
+        TakeAppointmentCommand takeCommand = new TakeAppointmentCommand(PATIENT, new VisitTimeId(visitTime.getId()));
         takeAppointmentUseCase.take(takeCommand);
 
         VisitTime visitTime = loadVisitTimePort.getById(VISIT_ID);
         Assertions.assertTrue(visitTime.isTaken());
-        Assertions.assertEquals(PATIENT_ID, visitTime.getPatientId());
+        Assertions.assertEquals(PATIENT, visitTime.getPatient());
 
     }
 }

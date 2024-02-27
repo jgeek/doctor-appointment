@@ -10,6 +10,7 @@ public class TestData {
 
     public static final int Start_TIME = 10;
     public static final int END_TIME = 12;
+    public static final Patient PATIENT = new Patient("behnia", "09121234567");
 
     public static LocalDateTime openTime() {
         return LocalDateTime.of(LocalDate.now(), LocalTime.of(Start_TIME, 0));

@@ -1,4 +1,4 @@
 package com.blubank.doctorappointment.application.domain.model;
 
-public record PatientInfo(Long id, String name, String phoneNumber) {
+public record PatientInfo(String name, String phoneNumber) {
 }

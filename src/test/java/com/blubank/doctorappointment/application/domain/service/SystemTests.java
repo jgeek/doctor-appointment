@@ -45,7 +45,7 @@ public class SystemTests {
 
     @Test
     public void if_patient_took_a_time_doctor_should_see_name_and_phone_number() {
-        TakeAppointmentCommand takeCommand = new TakeAppointmentCommand(PatientId.of(1L), VISIT_ID);
+        TakeAppointmentCommand takeCommand = new TakeAppointmentCommand(PATIENT, VISIT_ID);
         takeAppointmentUseCase.take(takeCommand);
 
         DoctorOpenTimesQuery viewCommand = new DoctorOpenTimesQuery(timeOf(openTime()));
