@@ -1,14 +1,14 @@
 package com.blubank.doctorappointment.application.domain.service;
 
-import com.blubank.doctorappointment.application.domain.model.PatientId;
+import com.blubank.doctorappointment.application.domain.model.VisitTime;
 import com.blubank.doctorappointment.application.domain.model.VisitTimeId;
-import com.blubank.doctorappointment.application.domain.model.VisitTimeInfo;
 import com.blubank.doctorappointment.application.port.in.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,18 +39,19 @@ public class SystemTests {
     public void doctor_adds_open_times_for_a_day() {
 
         DoctorOpenTimesQuery viewCommand = new DoctorOpenTimesQuery(timeOf(openTime()));
-        List<VisitTimeInfo> savedTimes = viewDoctorTimesUseCase.viewTimes(viewCommand);
+        List<VisitTime> savedTimes = viewDoctorTimesUseCase.viewTimes(viewCommand);
         assertThat(savedTimes, hasSize(4));
     }
 
     @Test
+    @Transactional
     public void if_patient_took_a_time_doctor_should_see_name_and_phone_number() {
         TakeAppointmentCommand takeCommand = new TakeAppointmentCommand(PATIENT, VISIT_ID);
         takeAppointmentUseCase.take(takeCommand);
 
         DoctorOpenTimesQuery viewCommand = new DoctorOpenTimesQuery(timeOf(openTime()));
-        List<VisitTimeInfo> savedTimes = viewDoctorTimesUseCase.viewTimes(viewCommand);
-        Optional<VisitTimeInfo> patientTime = savedTimes.stream().filter(vt -> vt.getPatient() != null).findFirst();
+        List<VisitTime> savedTimes = viewDoctorTimesUseCase.viewTimes(viewCommand);
+        Optional<VisitTime> patientTime = savedTimes.stream().filter(vt -> vt.getPatient() != null).findFirst();
         Assertions.assertTrue(patientTime.isPresent());
     }
 }

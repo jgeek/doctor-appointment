@@ -17,7 +17,7 @@ public class ViewDoctorTimesService implements ViewDoctorTimesUseCase {
     private final LoadVisitTimePort loadVisitTimePort;
 
     @Override
-    public List<VisitTimeInfo> viewTimes(DoctorOpenTimesQuery query) {
+    public List<VisitTime> viewTimes(DoctorOpenTimesQuery query) {
         return loadVisitTimePort.loadDoctorTimes(query.dateTime().getDate());
     }
 }

@@ -5,8 +5,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class VisitTime {
     private VisitTimeId id;

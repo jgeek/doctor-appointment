@@ -1,7 +1,7 @@
 package com.blubank.doctorappointment.adapter.out.persistence;
 
 import com.blubank.doctorappointment.application.domain.model.*;
-import com.blubank.doctorappointment.application.port.out.DeleteVisitTimePort;
+import com.blubank.doctorappointment.application.port.out.RemoveVisitTimePort;
 import com.blubank.doctorappointment.application.port.out.LoadVisitTimePort;
 import com.blubank.doctorappointment.application.port.out.UpdateVisitTimePort;
 import com.blubank.doctorappointment.common.PersistenceAdapter;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVisitTimePort, DeleteVisitTimePort {
+public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVisitTimePort, RemoveVisitTimePort {
 
     private final VisitTimeRepository visitTimeRepository;
     private final EntityMapper mapper;
@@ -34,13 +34,25 @@ public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVis
     }
 
     @Override
-    public List<VisitTimeInfo> loadDoctorTimes(LocalDateTime date) {
+    public List<VisitTime> loadDoctorTimes(LocalDateTime date) {
         List<Object[]> entities = visitTimeRepository.findADayTimes(date, date.plusDays(1));
-        List<VisitTimeInfo> list = entities.stream()
-                .map(o -> new VisitTimeInfo(Long.valueOf(o[0].toString()), toLocalDateTime(o[1]), toLocalDateTime(o[2]),
-                        new Patient((String) o[3], (String) o[4])))
+        List<VisitTime> list = entities.stream()
+                .map(this::toVisitTime)
                 .toList();
         return list;
+    }
+
+    private VisitTime toVisitTime(Object[] arr) {
+        return VisitTime.builder()
+                .id(toVisitId(arr[0]))
+                .start(toLocalDateTime(arr[1]))
+                .end(toLocalDateTime(arr[2]))
+                .patient(new Patient((String) arr[3], (String) arr[4]))
+                .build();
+    }
+
+    private VisitTimeId toVisitId(Object idObj) {
+        return new VisitTimeId(Long.valueOf(idObj.toString()));
     }
 
     @Override

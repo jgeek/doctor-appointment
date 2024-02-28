@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface LoadVisitTimePort {
 
-    List<VisitTimeInfo> loadDoctorTimes(LocalDateTime date);
+    List<VisitTime> loadDoctorTimes(LocalDateTime date);
 
     VisitTime getById(VisitTimeId visitTimeId);
 }

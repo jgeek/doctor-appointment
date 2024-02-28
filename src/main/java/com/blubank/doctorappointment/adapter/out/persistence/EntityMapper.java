@@ -18,10 +18,6 @@ public class EntityMapper {
 //        return entity;
 //    }
 
-    private PatientEntity toPatentEntity(Patient patient) {
-        return new PatientEntity(patient.name(), patient.phoneNumber());
-    }
-
     public VisitTimeEntity mapToVisitTimeEntity(VisitTime visitTime) {
         VisitTimeEntity entity = new VisitTimeEntity(visitTime.getStart(), visitTime.getEnd(),
                 toPatientEntity(visitTime.getPatient()), visitTime.getVersion());
@@ -30,7 +26,7 @@ public class EntityMapper {
     }
 
     private PatientEntity toPatientEntity(Patient patient) {
-        return patient != null ? new PatientEntity(patient.name(), patient.name()) : null;
+        return patient != null ? new PatientEntity(patient.name(), patient.phoneNumber()) : null;
     }
 
     private Long nullSave(VisitTimeId id) {

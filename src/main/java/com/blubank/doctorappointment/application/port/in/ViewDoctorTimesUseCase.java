@@ -6,5 +6,5 @@ import com.blubank.doctorappointment.application.domain.model.VisitTimeInfo;
 import java.util.List;
 
 public interface ViewDoctorTimesUseCase {
-    List<VisitTimeInfo> viewTimes(DoctorOpenTimesQuery query);
+    List<VisitTime> viewTimes(DoctorOpenTimesQuery query);
 }
