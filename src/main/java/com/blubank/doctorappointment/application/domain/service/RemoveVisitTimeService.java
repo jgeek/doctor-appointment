@@ -10,6 +10,7 @@ import com.blubank.doctorappointment.common.exception.NoEntityFoundException;
 import com.blubank.doctorappointment.common.exception.VisitTimeIsTakenException;
 import com.blubank.doctorappointment.common.exception.VisitTimeRemovedException;
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @AllArgsConstructor
@@ -19,6 +20,7 @@ public class RemoveVisitTimeService implements RemoveVisitTimeUseCase {
     private LoadVisitTimePort loadVisitTimePort;
 
     @Override
+    @Transactional
     public void remove(RemoveVisitTimeCommand command) {
         VisitTime visitTime;
         try {

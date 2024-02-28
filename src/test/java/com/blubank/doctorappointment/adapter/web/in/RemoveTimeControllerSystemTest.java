@@ -6,18 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(value = "classpath:default-times.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class RemoveTimeControllerSystemTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
     @Test
+    @Sql("classpath:default-times.sql")
+
     void time_remove_successfully() {
 
         ResponseEntity response = whenRemove(notTakenTimeId());
@@ -26,7 +29,8 @@ public class RemoveTimeControllerSystemTest {
     }
 
     @Test
-    @Transactional
+    @Sql("classpath:default-times.sql")
+
     void removing_taken_time_result_406_error() {
 
         ResponseEntity response = whenRemove(takenTimeId());
@@ -38,9 +42,8 @@ public class RemoveTimeControllerSystemTest {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         HttpEntity<Void> request = new HttpEntity<>(null, headers);
-        return restTemplate.exchange(
+        return restTemplate.postForEntity(
                 "/doctor/times/{timeId}/remove",
-                HttpMethod.POST,
                 request,
                 Object.class,
                 visitTimeId.id());
