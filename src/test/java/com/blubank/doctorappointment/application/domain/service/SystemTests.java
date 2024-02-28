@@ -38,7 +38,7 @@ public class SystemTests {
     @Test
     public void doctor_adds_open_times_for_a_day() {
 
-        DoctorOpenTimesQuery viewCommand = new DoctorOpenTimesQuery(timeOf(openTime()));
+        DoctorTimesQuery viewCommand = new DoctorTimesQuery(timeOf(openTime()));
         List<VisitTime> savedTimes = viewDoctorTimesUseCase.viewTimes(viewCommand);
         assertThat(savedTimes, hasSize(4));
     }
@@ -49,7 +49,7 @@ public class SystemTests {
         TakeAppointmentCommand takeCommand = new TakeAppointmentCommand(PATIENT, VISIT_ID);
         takeAppointmentUseCase.take(takeCommand);
 
-        DoctorOpenTimesQuery viewCommand = new DoctorOpenTimesQuery(timeOf(openTime()));
+        DoctorTimesQuery viewCommand = new DoctorTimesQuery(timeOf(openTime()));
         List<VisitTime> savedTimes = viewDoctorTimesUseCase.viewTimes(viewCommand);
         Optional<VisitTime> patientTime = savedTimes.stream().filter(vt -> vt.getPatient() != null).findFirst();
         Assertions.assertTrue(patientTime.isPresent());

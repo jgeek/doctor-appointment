@@ -1,6 +1,7 @@
 package com.blubank.doctorappointment.application.domain.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class VisitTime {
     private LocalDateTime start;
     private LocalDateTime end;
     private Patient patient;
+    @JsonIgnore
     private Long version;
 
     public boolean isTaken() {

@@ -36,10 +36,15 @@ public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVis
     @Override
     public List<VisitTime> loadDoctorTimes(LocalDateTime date) {
         List<Object[]> entities = visitTimeRepository.findADayTimes(date, date.plusDays(1));
-        List<VisitTime> list = entities.stream()
+        return entities.stream()
                 .map(this::toVisitTime)
                 .toList();
-        return list;
+    }
+
+    @Override
+    public List<PublicVisitTimeInfo> loadTimesForPatients(LocalDateTime date) {
+        return loadDoctorTimes(date).stream().filter(t -> !t.isTaken())
+                .map(t -> new PublicVisitTimeInfo(t.getId().id(), t.getStart(), t.getEnd(), t.isTaken())).toList();
     }
 
     private VisitTime toVisitTime(Object[] arr) {
@@ -60,6 +65,7 @@ public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVis
         return visitTimeRepository.findById(visitTimeId.id())
                 .map(mapper::mapToVisitTime).orElseThrow(() -> new NoEntityFoundException("visit time not found"));
     }
+
 
     private LocalDateTime toLocalDateTime(Object object) {
         return ((Timestamp) object).toLocalDateTime();

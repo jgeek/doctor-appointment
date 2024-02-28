@@ -23,8 +23,8 @@ public class TestData {
         return LocalDateTime.of(LocalDate.now(), LocalTime.of(END_TIME, 0));
     }
 
-    public static OpenTimeCommand.TimeDto timeOf(LocalDateTime dateTime) {
-        return new OpenTimeCommand.TimeDto(dateTime.getYear(), dateTime.getMonthValue(),
+    public static OpenTimeCommand.DateTimeDto timeOf(LocalDateTime dateTime) {
+        return new OpenTimeCommand.DateTimeDto(dateTime.getYear(), dateTime.getMonthValue(),
                 dateTime.getDayOfMonth(), dateTime.getHour(), dateTime.getMinute());
     }
 }
