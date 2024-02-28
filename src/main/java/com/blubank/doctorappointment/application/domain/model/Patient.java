@@ -1,13 +1,15 @@
 package com.blubank.doctorappointment.application.domain.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
 
-@Data
-@AllArgsConstructor
-public class Patient {
+import static com.blubank.doctorappointment.common.validation.Validation.validate;
 
-    private String name;
-    private String phoneNumber;
+public record Patient(@NotNull String name, @NotNull String phoneNumber) {
+
+    public Patient(@NotNull String name, @NotNull String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        validate(this);
+    }
 }
