@@ -14,4 +14,6 @@ public interface LoadVisitTimePort {
     VisitTime getById(VisitTimeId visitTimeId);
 
     List<PublicVisitTimeInfo> loadTimesForPatients(LocalDateTime date);
+
+    List<PublicVisitTimeInfo> loadPatientTimes(String phoneNumber);
 }
