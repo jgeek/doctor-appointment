@@ -48,6 +48,6 @@ public class ShowTimesToDoctorWebAdapter {
 
     @ModelAttribute
     public void addPatientTimeRequest(Model model) {
-        model.addAttribute("info", new AppointmentInfo());
+        model.addAttribute("info", new DateTimeDto());
     }
 }

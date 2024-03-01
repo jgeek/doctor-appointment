@@ -21,9 +21,21 @@ public class OpenTimesWebAdapter {
     private final ViewDoctorTimesUseCase viewDoctorTimesUseCase;
 
     @PostMapping("/open")
-    public String openTimes(@ModelAttribute("dates") OpenTimeCommand command, Model model) {
+    public String openTimes(@RequestParam(value = "date") String dateStr,
+                            @RequestParam(value = "startTime") String startTime,
+                            @RequestParam(value = "endTime") String endTime, Model model) {
+        DateTimeDto open = parseDate(dateStr, startTime);
+        DateTimeDto end = parseDate(dateStr, endTime);
+        var command = new OpenTimeCommand(open, end);
         openTimeServiceUseCase.openTimePeriod(command);
-        return "redirect:/open-times";
+        return "redirect:/clinic";
+    }
+
+    private DateTimeDto parseDate(String dateStr, String timeStr) {
+        String[] dateParts = dateStr.split("-");
+        String[] timeParts = timeStr.split(":");
+        return new DateTimeDto(Integer.valueOf(dateParts[0]), Integer.valueOf(dateParts[1]), Integer.valueOf(dateParts[2]),
+                Integer.valueOf(timeParts[0]), Integer.valueOf(timeParts[1]));
     }
 
     private DateTimeDto getOpen() {

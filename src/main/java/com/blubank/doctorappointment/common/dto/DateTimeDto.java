@@ -1,10 +1,11 @@
 package com.blubank.doctorappointment.common.dto;
 
+import lombok.Data;
 import lombok.Value;
 
 import java.time.LocalDateTime;
 
-@Value
+@Data
 public class DateTimeDto {
     int year, month, day, hour, minute;
     LocalDateTime date;
@@ -17,6 +18,10 @@ public class DateTimeDto {
         this.minute = minute;
 
         this.date = LocalDateTime.of(year, month, day, hour, minute, 0);
+    }
+
+    public DateTimeDto() {
+
     }
 
     public boolean isAfter(DateTimeDto other) {

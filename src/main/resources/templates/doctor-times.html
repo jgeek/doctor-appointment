@@ -9,30 +9,13 @@
 </head>
 <body>
 
-<h1> Reserve An Appointment</h1>
+<h1> Clinic Management</h1>
 
 <div>
-    <div class="alert alert-danger" role="alert" th:if="${errors != null}" style="width: 300px;margin: 10px;">
-        <ul>
-            <li th:each="var : ${errors?.getAllErrors}">
-                <td th:text="${var.field}"></td>
-                <td th:text="${var.defaultMessage}"></td>
-            </li>
-        </ul>
-    </div>
-    <div class="alert alert-success" role="alert" th:if="${message != null}" style="width: 300px; margin: 10px;">
-        <span th:text="${message}"></span>
-    </div>
 
-    <form method="POST" th:action="@{/clinic/remove}" th:object="${info}" id="appointmentForm">
+    <!--        <li th:each="err : ${fields}" th:text="${err}" />-->
 
-        <div th:if="${#fields.hasAnyErrors()}">
-            <ul>
-                <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
-            </ul>
-        </div>
-
-        <!--        <li th:each="err : ${fields}" th:text="${err}" />-->
+    <form method="POST" th:action="@{/clinic/open}" th:object="${info}">
 
         <div class="bd-example" style="width: 400px;border: solid #f7f7f9;margin: 10px;padding: 10px;">
             <div th:if="${#fields.hasErrors()}">
@@ -40,23 +23,21 @@
                   Please correct the problems below and resubmit.
                 </span>
             </div>
-            <div class="form-group">
-                <label for="name">Full name:</label>
-                <input type="text" class="form-control" id="name" placeholder="full name" th:field="*{name}">
-                <span class="validationError"
-                      th:if="${#fields.hasErrors('name')}"
-                      th:errors="*{name}">Name Error</span>
+            <div style="display: inline-flex">
+<!--                <label for="year">Year</label>-->
+                <input type="date" name="date">
+                <input type="time" name="startTime"> to <input type="time" name="endTime">
+<!--                <input type="text" class="form-control" id="year" placeholder="year" value="2024" th:field="*{year}" style="width: 60px">-->
+<!--                <input type="text" class="form-control" id="month" placeholder="month" th:field="*{month}" style="width: 60px">-->
+<!--                <input type="text" class="form-control" id="day" placeholder="day" th:field="*{day}" style="width: 60px">-->
+
             </div>
-            <div class="form-group">
-                <label for="phoneNumber">Phone Number:</label>
-                <input type="text" class="form-control" id="phoneNumber" placeholder="phone number"
-                       th:field="*{phoneNumber}">
-                <span class="invalid-feedback"
-                      th:if="${#fields.hasErrors('phoneNumber')}"
-                      th:errors="*{phoneNumber}">Phone number Error</span>
-            </div>
-            <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+            <br/>
+            <button type="submit" id="submitButton" class="btn btn-primary">Open times</button>
         </div>
+    </form>
+
+    <form method="POST" th:action="@{/clinic/remove}" th:object="${info}" id="appointmentForm">
 
         <table id="times">
             <tr>
@@ -92,64 +73,6 @@
     </form>
 </div>
 
-<script>
-    document.getElementById("submitButton_").addEventListener("click", function () {
-        var form = document.getElementById("appointmentForm");
-        var formData = new FormData(form);
-
-        // Send form data using AJAX
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", form.action);
-        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    // Update page content if needed
-                    // For example, update the times table
-                    var timesTable = document.getElementById("times");
-                    timesTable.innerHTML = xhr.responseText;
-                } else {
-                    // Handle error
-                    console.error("Error:", xhr.statusText);
-                }
-            }
-        };
-        xhr.send(formData);
-    });
-</script>
-
 </body>
 </html>
 
-
-<!--    <table>-->
-<!--        <tr th:each="var : ${#vars.getVariableNames()}">-->
-<!--            <td th:text="${var}"></td>-->
-<!--            <td th:text="${#vars.getVariable(var)}"></td>-->
-<!--        </tr>-->
-<!--        &lt;!&ndash;-->
-<!--            Adding these manually because they are considered special.-->
-<!--            see https://github.com/thymeleaf/thymeleaf/blob/thymeleaf-3.0.3.RELEASE/src/main/java/org/thymeleaf/context/WebEngineContext.java#L199-->
-<!--        &ndash;&gt;-->
-<!--        <tr>-->
-<!--            <td>param</td>-->
-<!--            <td th:text="${#vars.getVariable('param')}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>session</td>-->
-<!--            <td th:text="${#vars.getVariable('session')}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>application</td>-->
-<!--            <td th:text="${#vars.getVariable('application')}"></td>-->
-<!--        </tr>-->
-<!--    </table>-->
-
-<!--    <table>-->
-<!--        <tr th:each="var : ${#vars}">-->
-<!--            <td th:text="${var.key}"></td>-->
-<!--            <td th:text="${var.value}"></td>-->
-<!--        </tr>-->
-<!--    </table>-->
-
-<!--    <span th:text="${errors}" th:if="${errors}"></span>-->
