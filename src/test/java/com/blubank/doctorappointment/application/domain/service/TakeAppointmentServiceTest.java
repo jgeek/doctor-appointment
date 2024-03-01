@@ -1,5 +1,6 @@
 package com.blubank.doctorappointment.application.domain.service;
 
+import com.blubank.doctorappointment.adapter.out.persistence.VisitTimeRepository;
 import com.blubank.doctorappointment.application.domain.model.VisitTime;
 import com.blubank.doctorappointment.application.port.in.OpenTimeCommand;
 import com.blubank.doctorappointment.application.port.in.OpenTimeServiceUseCase;
@@ -8,8 +9,10 @@ import com.blubank.doctorappointment.application.port.in.TakeAppointmentUseCase;
 import com.blubank.doctorappointment.application.port.out.RemoveVisitTimePort;
 import com.blubank.doctorappointment.application.port.out.LoadVisitTimePort;
 import com.blubank.doctorappointment.application.port.out.UpdateVisitTimePort;
+import com.blubank.doctorappointment.common.PersistenceAdapter;
 import com.blubank.doctorappointment.common.exception.VisitTimeIsTakenException;
 import com.blubank.doctorappointment.common.exception.VisitTimeRemovedException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +35,16 @@ public class TakeAppointmentServiceTest {
     @Autowired
     private RemoveVisitTimePort removeVisitTimePort;
 
+    @Autowired
+    private VisitTimeRepository visitTimeRepository;
+
+    @AfterEach
+    public void afterEach(){
+        visitTimeRepository.deleteAll();
+    }
+
     @Test
-    @Transactional // transactional needed to rollback tx after each test run
+//    @Transactional // transactional needed to rollback tx after each test run
     public void patient_take_an_appointment() {
 
         givenDoctorOpensSomeTimes();
@@ -43,7 +54,7 @@ public class TakeAppointmentServiceTest {
     }
 
     @Test
-    @Transactional
+//    @Transactional
     public void if_the_time_is_taken_so_patient_should_get_the_error() {
         givenDoctorOpensSomeTimes();
         VisitTime candidateAppointment = getATimeVisit();
@@ -55,7 +66,7 @@ public class TakeAppointmentServiceTest {
     }
 
     @Test
-    @Transactional
+//    @Transactional
     public void if_the_time_is_removed_before_so_patient_should_get_the_error() {
         givenDoctorOpensSomeTimes();
         VisitTime candidateAppointment = getATimeVisit();

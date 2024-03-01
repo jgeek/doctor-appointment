@@ -1,3 +1,7 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /appointment
 logging:
   level:
     root: INFO
@@ -47,3 +51,6 @@ spring:
   sql:
     init:
       mode: never
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/

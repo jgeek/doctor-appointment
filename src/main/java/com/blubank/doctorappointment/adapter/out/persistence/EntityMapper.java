@@ -7,17 +7,6 @@ import java.util.List;
 
 @Component
 public class EntityMapper {
-//    public DoctorTimesEntity mapToDoctorTimesJpaEntity(DoctorTimes doctorTimes) {
-//        DoctorTimesEntity entity = new DoctorTimesEntity();
-//        entity.setId(Optional.ofNullable(doctorTimes.getId()).map(DoctorTimesId::id).orElse(null));
-//        entity.setOpenTime(doctorTimes.getOpenTime());
-//        entity.setEndTime(doctorTimes.getEndTime());
-//        List<VisitTimeEntity> visitTimeEntities = doctorTimes.getVisitTimes().stream()
-//                .map(vt -> new VisitTimeEntity(vt.getStart(), vt.getEnd(), toPatentEntity(vt.getPatientId()))).toList();
-//        entity.setVisitTimes(visitTimeEntities);
-//        return entity;
-//    }
-
     public VisitTimeEntity mapToVisitTimeEntity(VisitTime visitTime) {
         VisitTimeEntity entity = new VisitTimeEntity(visitTime.getStart(), visitTime.getEnd(),
                 toPatientEntity(visitTime.getPatient()), visitTime.getVersion());

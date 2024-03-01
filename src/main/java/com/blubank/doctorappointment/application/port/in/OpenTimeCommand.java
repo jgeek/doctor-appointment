@@ -1,6 +1,7 @@
 package com.blubank.doctorappointment.application.port.in;
 
 import com.blubank.doctorappointment.application.domain.service.InvalidTimeException;
+import com.blubank.doctorappointment.common.dto.DateTimeDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
 
@@ -17,26 +18,6 @@ public record OpenTimeCommand(@NotNull DateTimeDto open,
         validate(this);
         if (open.isAfter(end)) {
             throw new InvalidTimeException();
-        }
-    }
-
-    @Value
-    public static class DateTimeDto {
-        int year, month, day, hour, minute;
-        LocalDateTime date;
-
-        public DateTimeDto(int year, int month, int day, int hour, int minute) {
-            this.year = year;
-            this.month = month;
-            this.day = day;
-            this.hour = hour;
-            this.minute = minute;
-
-            this.date = LocalDateTime.of(year, month, day, hour, minute, 0);
-        }
-
-        public boolean isAfter(DateTimeDto other) {
-            return this.date.isAfter(other.getDate());
         }
     }
 }

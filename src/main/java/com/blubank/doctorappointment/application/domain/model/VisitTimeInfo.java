@@ -3,18 +3,19 @@ package com.blubank.doctorappointment.application.domain.model;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
-public class PublicVisitTimeInfo {
+public class VisitTimeInfo {
     private Long id;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private Date start;
+    private Date end;
     private boolean isTaken;
-    public PublicVisitTimeInfo(Long id, LocalDateTime start, LocalDateTime end, boolean isTaken) {
+
+    public VisitTimeInfo(Long id, Date start, Date end, boolean isTaken) {
         this.id = id;
         this.start = start;
         this.end = end;
         this.isTaken = isTaken;
     }
-
 }

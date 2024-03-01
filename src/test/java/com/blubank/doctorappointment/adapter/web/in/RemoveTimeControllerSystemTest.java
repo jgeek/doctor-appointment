@@ -19,8 +19,7 @@ public class RemoveTimeControllerSystemTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    @Sql("classpath:default-times.sql")
-
+    @Sql("file:src/test/resources/default-times.sql")
     void time_remove_successfully() {
 
         ResponseEntity response = whenRemove(notTakenTimeId());
@@ -29,8 +28,7 @@ public class RemoveTimeControllerSystemTest {
     }
 
     @Test
-    @Sql("classpath:default-times.sql")
-
+    @Sql("file:src/test/resources/default-times.sql")
     void removing_taken_time_result_406_error() {
 
         ResponseEntity response = whenRemove(takenTimeId());

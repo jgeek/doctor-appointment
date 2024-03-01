@@ -1,7 +1,7 @@
 package com.blubank.doctorappointment.application.domain.model;
 
-import com.blubank.doctorappointment.application.port.in.OpenTimeCommand;
 import com.blubank.doctorappointment.application.port.in.PatientInfo;
+import com.blubank.doctorappointment.common.dto.DateTimeDto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,8 +23,8 @@ public class TestData {
         return LocalDateTime.of(LocalDate.now(), LocalTime.of(END_TIME, 0));
     }
 
-    public static OpenTimeCommand.DateTimeDto timeOf(LocalDateTime dateTime) {
-        return new OpenTimeCommand.DateTimeDto(dateTime.getYear(), dateTime.getMonthValue(),
+    public static DateTimeDto timeOf(LocalDateTime dateTime) {
+        return new DateTimeDto(dateTime.getYear(), dateTime.getMonthValue(),
                 dateTime.getDayOfMonth(), dateTime.getHour(), dateTime.getMinute());
     }
 }

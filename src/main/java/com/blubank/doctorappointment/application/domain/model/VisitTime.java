@@ -18,7 +18,7 @@ public class VisitTime {
     private Long version;
 
     public boolean isTaken() {
-        return patient != null;
+        return patient != null && patient.name() != null;
     }
 
     public void takeBy(Patient patient) {

@@ -16,6 +16,10 @@ public record DateInfo(@NotNull Integer year, @NotNull Integer month, @NotNull I
         validate(this);
     }
 
+    public static DateInfo fromDate(LocalDateTime date) {
+        return new DateInfo(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+    }
+
     public LocalDateTime getDate() {
         return LocalDateTime.of(year, month, day, 0, 0, 0);
     }
