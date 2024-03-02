@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-public class VisitTimeIsTakenException extends RuntimeException {
+public class VisitTimeIsTakenException extends DomainException {
     public VisitTimeIsTakenException(VisitTimeId visitTimeId) {
         super(String.format("visit time with id %s is taken", visitTimeId.id()));
     }

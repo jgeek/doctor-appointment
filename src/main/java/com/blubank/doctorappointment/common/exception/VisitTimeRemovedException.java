@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class VisitTimeRemovedException extends RuntimeException {
+public class VisitTimeRemovedException extends DomainException {
     public VisitTimeRemovedException(VisitTimeId id) {
         super(String.format("visit time with id %s is already removed.", id.id()));
     }

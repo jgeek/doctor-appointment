@@ -5,6 +5,7 @@ import com.blubank.doctorappointment.application.port.in.OpenTimeCommand;
 
 import static com.blubank.doctorappointment.application.domain.model.TestData.*;
 
+import com.blubank.doctorappointment.application.port.out.LoadVisitTimePort;
 import com.blubank.doctorappointment.application.port.out.UpdateVisitTimePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,8 @@ import java.util.List;
 public class OpenServiceTest {
     @Mock
     private UpdateVisitTimePort updateVisitTimePort;
+    @Mock
+    private LoadVisitTimePort loadVisitTimePort;
     private OpenTimeService openTimeService;
 
     @Captor
@@ -28,7 +31,7 @@ public class OpenServiceTest {
 
     @BeforeEach
     public void beforeEach() {
-        openTimeService = new OpenTimeService(new TimeGenerator(), updateVisitTimePort);
+        openTimeService = new OpenTimeService(new TimeGenerator(), updateVisitTimePort, loadVisitTimePort);
     }
 
     @Test

@@ -9,6 +9,7 @@ import com.blubank.doctorappointment.common.UseCase;
 
 
 import com.blubank.doctorappointment.common.dto.DateTimeDto;
+import com.blubank.doctorappointment.common.exception.TimesForDayAlreadyOpened;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +21,9 @@ import java.util.List;
 @UseCase
 public class OpenTimeService implements OpenTimeServiceUseCase {
 
-
     private final TimeGenerator timeGenerator;
     private final UpdateVisitTimePort updateVisitTimePort;
-    private LoadVisitTimePort loadVisitTimePort;
+    private final LoadVisitTimePort loadVisitTimePort;
 
     @Transactional
     @Override
@@ -32,7 +32,7 @@ public class OpenTimeService implements OpenTimeServiceUseCase {
         List<VisitTime> alreadyCreatedTimes = loadVisitTimePort
                 .loadDoctorTimes(LocalDateTime.of(open.getYear(), open.getMonth(), open.getDay(), 0, 0));
         if (!alreadyCreatedTimes.isEmpty()) {
-            throw new RuntimeException("times already opened for this day!");
+            throw new TimesForDayAlreadyOpened();
         }
         var visitTimes = timeGenerator.generate(command.open().getDate(), command.end().getDate());
         updateVisitTimePort.addAll(visitTimes);

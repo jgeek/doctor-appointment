@@ -20,6 +20,10 @@ public class DateTimeDto {
         this.date = LocalDateTime.of(year, month, day, hour, minute, 0);
     }
 
+    public static DateTimeDto of(LocalDateTime date) {
+        return new DateTimeDto(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), 0, 0);
+    }
+
     public DateTimeDto() {
 
     }
