@@ -8,44 +8,46 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 class DependencyRuleTests {
 
-	@Test
-	void validateRegistrationContextArchitecture() {
-		HexagonalArchitecture.basePackage("com.blubank.doctorappointment")
+    private static final String BASE_PACKAGE = "com.blubank.doctorappointment";
 
-				.withDomainLayer("application.domain")
+    @Test
+    void validateRegistrationContextArchitecture() {
+        HexagonalArchitecture.basePackage(BASE_PACKAGE)
 
-				.withAdaptersLayer("adapter")
-				.incoming("in.web")
-				.outgoing("out.persistence")
-				.and()
+                .withDomainLayer("application.domain")
 
-				.withApplicationLayer("application")
-				.incomingPorts("port.in")
-				.outgoingPorts("port.out")
-				.and()
+                .withAdaptersLayer("adapter")
+                .incoming("in.web")
+                .outgoing("out.persistence")
+                .and()
 
-				.withConfiguration("configuration")
-				.check(new ClassFileImporter()
-						.importPackages("com.blubank.doctorappointment.."));
-	}
+                .withApplicationLayer("application")
+                .incomingPorts("port.in")
+                .outgoingPorts("port.out")
+                .and()
 
-	@Test
-	void domainModelDoesNotDependOnOutside() {
-		noClasses()
-				.that()
-				.resideInAPackage("com.blubank.doctorappointment.application.domain.model..")
-				.should()
-				.dependOnClassesThat()
-				.resideOutsideOfPackages(
-						"com.blubank.doctorappointment.application.domain.model..",
-						"lombok..",
-						"java..",
-						"com.blubank.doctorappointment.common.validation..",
-						"jakarta.validation..",
-						"com.fasterxml.jackson.annotation.."
-				)
-				.check(new ClassFileImporter()
-						.importPackages("com.blubank.doctorappointment.."));
-	}
+                .withConfiguration("configuration")
+                .check(new ClassFileImporter()
+                        .importPackages(BASE_PACKAGE + ".."));
+    }
+
+    @Test
+    void domainModelDoesNotDependOnOutside() {
+        noClasses()
+                .that()
+                .resideInAPackage(BASE_PACKAGE + ".application.domain.model..")
+                .should()
+                .dependOnClassesThat()
+                .resideOutsideOfPackages(
+                        BASE_PACKAGE + ".application.domain.model..",
+                        "lombok..",
+                        "java..",
+                        BASE_PACKAGE + ".common.validation..",
+                        "jakarta.validation..",
+                        "com.fasterxml.jackson.annotation.."
+                )
+                .check(new ClassFileImporter()
+                        .importPackages(BASE_PACKAGE + ".."));
+    }
 
 }
