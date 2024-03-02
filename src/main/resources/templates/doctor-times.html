@@ -39,7 +39,7 @@
 
         </div>
         <br/>
-        <button type="submit" id="submitButton" class="btn btn-primary">Open times</button>
+        <button type="submit" id="submitButton" class="btn btn-primary">Open Time</button>
     </div>
 </form>
 
@@ -48,52 +48,48 @@
         <h3>Pick a date to filter the times:</h3>
         <div style="display: inline-flex;margin: 10px">
             <input type="date" name="date" style="margin-left: 10px;" id="datePicker2" value="2024-3-3">
-            <button type="submit" class="btn btn-primary" th:action="@{/clinic/times}">Open times</button>
+            <button type="submit" class="btn btn-primary" th:action="@{/clinic/times}">Search</button>
 
         </div>
     </form>
 </div>
 
-<form method="POST" id="appointmentForm">
-    <br/>
-    <table id="times">
-        <tr>
-            <th>#</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Patient</th>
-            <th>Actions</th>
-        </tr>
-        <tr th:each="time : ${times}">
-            <td><span th:text="${time.id.id}"/></td>
-            <td><span th:text="${time.start.year}"/>-
-                <span th:text="${time.start.monthValue}"/>-
-                <span th:text="${time.start.dayOfMonth}"/>
-            </td>
-            <!--            <td><span th:text="${#dates.format(time.start.toLocalDate(), 'yyyy-MM-dd HH:mm:ss')}"/></td>-->
-            <td><span th:text="${time.end.year}"/>-
-                <span th:text="${time.end.monthValue}"/>-
-                <span th:text="${time.end.dayOfMonth}"/>
-            </td>
-            <td>
-                <span th:text="${time.patient.name}" th:if="${time.taken == true}"/>
-                <span th:text="${time.patient.phoneNumber}" th:if="${time.taken == true}"/>
-            </td>
-            <td>
-                <button type="submit" name="remove" th:value="${time.id}" th:action="@{/clinic/remove}"
-                        th:if="${time.taken == false}">Remove
+<br/>
+<table id="times">
+    <tr>
+        <th>#</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Patient</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="time : ${times}">
+        <td><span th:text="${time.id.id}"/></td>
+        <td><span th:text="${time.start.year}"/>-
+            <span th:text="${time.start.monthValue}"/>-
+            <span th:text="${time.start.dayOfMonth}"/>
+        </td>
+        <!--            <td><span th:text="${#dates.format(time.start.toLocalDate(), 'yyyy-MM-dd HH:mm:ss')}"/></td>-->
+        <td><span th:text="${time.end.year}"/>-
+            <span th:text="${time.end.monthValue}"/>-
+            <span th:text="${time.end.dayOfMonth}"/>
+        </td>
+        <td>
+            <span th:text="${time.patient.name}" th:if="${time.taken == true}"/>
+            <span th:text="${time.patient.phoneNumber}" th:if="${time.taken == true}"/>
+        </td>
+        <td>
+            <form th:action="@{/clinic/times/remove}" method="post">
+                <button type="submit" name="remove" th:value="${time.id.id}"
+                        th:if="${time.taken == false or true}">Remove
                 </button>
-            </td>
-            </td>
-        </tr>
-    </table>
-
-</form>
+            </form>
+        </td>
+        </td>
+    </tr>
+</table>
 
 <script>
-
-    // document.getElementById("datePicker1").defaultValue = Date.now();
-    // document.getElementById("datePicker2").defaultValue = Date.now();
 
 </script>
 
