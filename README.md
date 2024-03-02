@@ -2,7 +2,7 @@
 
 ## Architecture
 
-In this project I tried to implement Port and Adapter architecture and some do DDD practices.
+In this project I tried to implement Port and Adapter architecture and somehow do DDD practices.
 By the way the code need some refactoring.
 
 ## Tests
