@@ -1,5 +1,6 @@
-package com.blubank.doctorappointment.application.domain.model;
+package com.blubank.doctorappointment.application.domain.service;
 
+import com.blubank.doctorappointment.application.domain.model.VisitTimeId;
 import com.blubank.doctorappointment.application.port.in.PatientInfo;
 import com.blubank.doctorappointment.common.dto.DateTimeDto;
 

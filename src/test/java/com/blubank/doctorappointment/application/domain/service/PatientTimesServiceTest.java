@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static com.blubank.doctorappointment.application.domain.model.TestData.openTime;
+import static com.blubank.doctorappointment.application.domain.service.TestData.openTime;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 

@@ -1,8 +1,8 @@
-package com.blubank.doctorappointment.application.domain.model;
+package com.blubank.doctorappointment.application.domain.service;
 
-import static com.blubank.doctorappointment.application.domain.model.TestData.*;
+import static com.blubank.doctorappointment.application.domain.service.TestData.*;
 
-import com.blubank.doctorappointment.application.domain.TimeGenerator;
+import com.blubank.doctorappointment.application.domain.model.VisitTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

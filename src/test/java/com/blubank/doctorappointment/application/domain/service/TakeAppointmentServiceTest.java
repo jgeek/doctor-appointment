@@ -9,7 +9,6 @@ import com.blubank.doctorappointment.application.port.out.RemoveVisitTimePort;
 import com.blubank.doctorappointment.application.port.out.LoadVisitTimePort;
 import com.blubank.doctorappointment.common.exception.VisitTimeIsTakenException;
 import com.blubank.doctorappointment.common.exception.VisitTimeRemovedException;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.time.LocalDateTime;
 
-import static com.blubank.doctorappointment.application.domain.model.TestData.*;
+import static com.blubank.doctorappointment.application.domain.service.TestData.*;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)

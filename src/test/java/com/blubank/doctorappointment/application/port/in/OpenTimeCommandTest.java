@@ -1,6 +1,5 @@
 package com.blubank.doctorappointment.application.port.in;
 
-import com.blubank.doctorappointment.application.domain.model.TestData;
 import com.blubank.doctorappointment.application.domain.service.InvalidTimeException;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
@@ -8,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static com.blubank.doctorappointment.application.domain.model.TestData.timeOf;
+import static com.blubank.doctorappointment.application.domain.service.TestData.timeOf;
 
 public class OpenTimeCommandTest {
 

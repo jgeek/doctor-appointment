@@ -4,7 +4,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.blubank.doctorappointment.application.domain.model.TestData.*;
+import static com.blubank.doctorappointment.application.domain.service.TestData.*;
 
 public class TakeAppointmentCommandTest {
     @Test
