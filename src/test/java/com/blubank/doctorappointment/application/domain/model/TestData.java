@@ -6,6 +6,7 @@ import com.blubank.doctorappointment.common.dto.DateTimeDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Random;
 
 public class TestData {
 
@@ -16,11 +17,12 @@ public class TestData {
 
 
     public static LocalDateTime openTime() {
-        return LocalDateTime.of(LocalDate.now(), LocalTime.of(Start_TIME, 0));
+        int day = new Random().nextInt(365);
+        return LocalDateTime.of(LocalDate.ofYearDay(2024, day), LocalTime.of(Start_TIME, 0));
     }
 
-    public static LocalDateTime endTime() {
-        return LocalDateTime.of(LocalDate.now(), LocalTime.of(END_TIME, 0));
+    public static LocalDateTime endTime(LocalDateTime openTime) {
+        return LocalDateTime.of(openTime.toLocalDate(), LocalTime.of(END_TIME, 0));
     }
 
     public static DateTimeDto timeOf(LocalDateTime dateTime) {

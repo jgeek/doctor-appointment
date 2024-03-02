@@ -2,14 +2,11 @@ package com.blubank.doctorappointment.application.domain.model;
 
 import static com.blubank.doctorappointment.application.domain.model.TestData.*;
 
-import com.blubank.doctorappointment.application.domain.service.TimeGenerator;
+import com.blubank.doctorappointment.application.domain.TimeGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import static com.blubank.doctorappointment.config.AppConfig.VISIT_PERIOD_MINUTES;
@@ -28,7 +25,8 @@ public class TimeGeneratorTest {
     @Test
     public void should_split_times_correctly() {
 
-        List<VisitTime> times = timeGenerator.generate(openTime(), endTime());
+        var openTime = openTime();
+        List<VisitTime> times = timeGenerator.generate(openTime, endTime(openTime));
         assertThat(times, hasSize(4));
 
         var firstVisitTime = times.get(0);
@@ -42,13 +40,15 @@ public class TimeGeneratorTest {
 
     @Test
     public void should_split_times_correctly_if_has_less_than_30_minutes_part() {
-        List<VisitTime> times = timeGenerator.generate(openTime(), endTime().plusMinutes(10));
+        var openTime = openTime();
+        List<VisitTime> times = timeGenerator.generate(openTime, endTime(openTime).plusMinutes(10));
         assertThat(times, hasSize(4));
     }
 
     @Test
     public void should_not_generate_visit_time_if_period_is_less_than_30_minutes() {
-        List<VisitTime> times = timeGenerator.generate(openTime(), openTime().plusMinutes(29));
+        var openTime = openTime();
+        List<VisitTime> times = timeGenerator.generate(openTime, openTime.plusMinutes(29));
         assertThat(times, hasSize(0));
     }
 }

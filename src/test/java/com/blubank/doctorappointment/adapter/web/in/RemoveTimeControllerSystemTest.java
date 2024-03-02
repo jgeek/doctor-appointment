@@ -48,10 +48,10 @@ public class RemoveTimeControllerSystemTest {
     }
 
     private VisitTimeId notTakenTimeId() {
-        return new VisitTimeId(1L);
+        return new VisitTimeId(100L);
     }
 
     private VisitTimeId takenTimeId() {
-        return new VisitTimeId(2L);
+        return new VisitTimeId(200L);
     }
 }

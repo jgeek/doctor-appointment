@@ -1,4 +1,4 @@
-package com.blubank.doctorappointment.application.domain.service;
+package com.blubank.doctorappointment.application.domain;
 
 import com.blubank.doctorappointment.application.domain.model.VisitTime;
 import org.springframework.stereotype.Component;

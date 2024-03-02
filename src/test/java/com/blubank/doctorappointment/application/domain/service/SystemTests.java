@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,6 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-
 public class SystemTests {
 
     @Autowired
@@ -30,17 +30,19 @@ public class SystemTests {
     private TakeAppointmentUseCase takeAppointmentUseCase;
 
     private static final VisitTimeId VISIT_ID = new VisitTimeId(1L);
+    private LocalDateTime openTime;
 
     @BeforeEach
     public void beforeEach() {
-        OpenTimeCommand command = new OpenTimeCommand(timeOf(openTime()), timeOf(endTime()));
+        openTime = openTime();
+        OpenTimeCommand command = new OpenTimeCommand(timeOf(openTime), timeOf(endTime(openTime)));
         openTimeServiceUseCase.openTimePeriod(command);
     }
 
     @Test
     public void doctor_adds_open_times_for_a_day() {
 
-        DoctorTimesQuery viewCommand = new DoctorTimesQuery(timeOf(openTime()));
+        DoctorTimesQuery viewCommand = new DoctorTimesQuery(timeOf(openTime));
         List<VisitTime> savedTimes = viewDoctorTimesUseCase.viewTimes(viewCommand);
         assertThat(savedTimes, hasSize(4));
     }
@@ -50,7 +52,7 @@ public class SystemTests {
         TakeAppointmentCommand takeCommand = new TakeAppointmentCommand(PATIENT, VISIT_ID);
         takeAppointmentUseCase.take(takeCommand);
 
-        DoctorTimesQuery viewCommand = new DoctorTimesQuery(timeOf(openTime()));
+        DoctorTimesQuery viewCommand = new DoctorTimesQuery(timeOf(openTime));
         List<VisitTime> savedTimes = viewDoctorTimesUseCase.viewTimes(viewCommand);
         Optional<VisitTime> patientTime = savedTimes.stream().filter(vt -> vt.getPatient() != null).findFirst();
         Assertions.assertTrue(patientTime.isPresent());

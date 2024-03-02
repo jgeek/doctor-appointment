@@ -1,5 +1,6 @@
 package com.blubank.doctorappointment.application.domain.service;
 
+import com.blubank.doctorappointment.application.domain.TimeGenerator;
 import com.blubank.doctorappointment.application.domain.model.VisitTime;
 import com.blubank.doctorappointment.application.port.in.OpenTimeCommand;
 
@@ -37,7 +38,8 @@ public class OpenServiceTest {
     @Test
     public void doctor_adds_open_times_for_a_day() {
 
-        OpenTimeCommand command = new OpenTimeCommand(timeOf(openTime()), timeOf(endTime()));
+        var openTime = openTime();
+        OpenTimeCommand command = new OpenTimeCommand(timeOf(openTime), timeOf(endTime(openTime)));
         openTimeService.openTimePeriod(command);
 
         Mockito.verify(updateVisitTimePort).addAll(argumentCaptor.capture());

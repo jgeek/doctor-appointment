@@ -1,5 +1,6 @@
 package com.blubank.doctorappointment.application.domain.service;
 
+import com.blubank.doctorappointment.application.domain.TimeGenerator;
 import com.blubank.doctorappointment.application.domain.model.VisitTime;
 import com.blubank.doctorappointment.application.port.in.OpenTimeCommand;
 import com.blubank.doctorappointment.application.port.in.OpenTimeServiceUseCase;

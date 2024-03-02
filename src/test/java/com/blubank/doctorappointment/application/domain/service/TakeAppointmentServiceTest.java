@@ -1,6 +1,5 @@
 package com.blubank.doctorappointment.application.domain.service;
 
-import com.blubank.doctorappointment.adapter.out.persistence.VisitTimeRepository;
 import com.blubank.doctorappointment.application.domain.model.VisitTime;
 import com.blubank.doctorappointment.application.port.in.OpenTimeCommand;
 import com.blubank.doctorappointment.application.port.in.OpenTimeServiceUseCase;
@@ -8,21 +7,22 @@ import com.blubank.doctorappointment.application.port.in.TakeAppointmentCommand;
 import com.blubank.doctorappointment.application.port.in.TakeAppointmentUseCase;
 import com.blubank.doctorappointment.application.port.out.RemoveVisitTimePort;
 import com.blubank.doctorappointment.application.port.out.LoadVisitTimePort;
-import com.blubank.doctorappointment.application.port.out.UpdateVisitTimePort;
-import com.blubank.doctorappointment.common.PersistenceAdapter;
 import com.blubank.doctorappointment.common.exception.VisitTimeIsTakenException;
 import com.blubank.doctorappointment.common.exception.VisitTimeRemovedException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.time.LocalDateTime;
+
 import static com.blubank.doctorappointment.application.domain.model.TestData.*;
 
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TakeAppointmentServiceTest {
 
     @Autowired
@@ -32,16 +32,13 @@ public class TakeAppointmentServiceTest {
     @Autowired
     private LoadVisitTimePort loadVisitTimePort;
     @Autowired
-    private UpdateVisitTimePort updateVisitTimePort;
-    @Autowired
     private RemoveVisitTimePort removeVisitTimePort;
+    private LocalDateTime openTime;
 
-    @Autowired
-    private VisitTimeRepository visitTimeRepository;
-
-    @AfterEach
-    public void afterEach(){
-        visitTimeRepository.deleteAll();
+    @BeforeEach
+    public void beforeEach() {
+        removeVisitTimePort.removeAll();
+        openTime = openTime();
     }
 
     @Test
@@ -51,7 +48,7 @@ public class TakeAppointmentServiceTest {
         givenDoctorOpensSomeTimes();
         var candidateAppointment = getATimeVisit();
         whenPatientTakeAnAppointment(candidateAppointment);
-        thenAppointmentShouldBeTakenByPatientCorrectly(candidateAppointment);
+        thenAppointmentShouldBeTakenByPatientSuccessfully(candidateAppointment);
     }
 
     @Test
@@ -85,12 +82,12 @@ public class TakeAppointmentServiceTest {
     }
 
     private VisitTime getATimeVisit() {
-        return loadVisitTimePort.loadDoctorTimes(openTime()).get(0);
+        return loadVisitTimePort.loadDoctorTimes(openTime).get(0);
     }
 
 
     private void givenDoctorOpensSomeTimes() {
-        OpenTimeCommand command = new OpenTimeCommand(timeOf(openTime()), timeOf(endTime()));
+        OpenTimeCommand command = new OpenTimeCommand(timeOf(openTime), timeOf(endTime(openTime)));
         openTimeServiceUseCase.openTimePeriod(command);
     }
 
@@ -99,7 +96,7 @@ public class TakeAppointmentServiceTest {
         takeAppointmentUseCase.take(takeCommand);
     }
 
-    private void thenAppointmentShouldBeTakenByPatientCorrectly(VisitTime appointment) {
+    private void thenAppointmentShouldBeTakenByPatientSuccessfully(VisitTime appointment) {
         VisitTime visitTime = loadVisitTimePort.getById(appointment.getId());
         Assertions.assertTrue(visitTime.isTaken());
         Assertions.assertEquals(PATIENT.toPatient(), visitTime.getPatient());

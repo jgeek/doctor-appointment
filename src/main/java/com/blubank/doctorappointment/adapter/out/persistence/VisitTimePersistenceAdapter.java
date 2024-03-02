@@ -86,6 +86,11 @@ public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVis
         visitTimeRepository.deleteById(visitTimeId.id());
     }
 
+    @Override
+    public void removeAll() {
+        visitTimeRepository.deleteAll();
+    }
+
     private boolean notExist(VisitTimeId visitTimeId) {
         try {
             visitTimeRepository.getReferenceById(visitTimeId.id());
@@ -93,5 +98,9 @@ public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVis
         } catch (EntityNotFoundException e) {
             return true;
         }
+    }
+
+    public void deleteTimes() {
+        visitTimeRepository.deleteAll();
     }
 }

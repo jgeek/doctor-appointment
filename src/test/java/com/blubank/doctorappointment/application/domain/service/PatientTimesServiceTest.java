@@ -27,7 +27,8 @@ public class PatientTimesServiceTest {
 
     @Test
     public void patient_should_see_his_times_providing_phone_number() {
-        PublicVisitTimeInfo timeInfo = new PublicVisitTimeInfo(1L, openTime(), openTime().plusMinutes(30), true);
+        var openTime = openTime();
+        PublicVisitTimeInfo timeInfo = new PublicVisitTimeInfo(1L, openTime, openTime.plusMinutes(30), true);
         String phoneNumber = "123";
         given(loadVisitTimePort.loadPatientTimes(eq(phoneNumber)))
                 .willReturn(List.of(timeInfo));
