@@ -2,15 +2,17 @@ package com.blubank.doctorappointment.adapter.in.web;
 
 import com.blubank.doctorappointment.application.domain.model.PublicVisitTimeInfo;
 import com.blubank.doctorappointment.application.port.in.*;
+import com.blubank.doctorappointment.common.DateUtils;
 import com.blubank.doctorappointment.common.WebAdapter;
-import jakarta.validation.Valid;
+import com.blubank.doctorappointment.common.dto.DateTimeDto;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +26,7 @@ public class ListTimesToPatientsWebAdapter {
     private final PatientSearchForVisitTimeUseCase useCase;
 
     @GetMapping()
-    public String homePage(@Valid String test, Model model, RedirectAttributes redirectAttributes) {
+    public String homePage() {
 
 //        ShowTimesToDoctorWebAdapter.handleErrors(model);
         return "times";
@@ -32,9 +34,14 @@ public class ListTimesToPatientsWebAdapter {
     }
 
     @ModelAttribute
-    public void addTimes(Model model) {
-        LocalDateTime date = LocalDateTime.of(2024, 2, 28, 0, 0);
-        List<PublicVisitTimeInfo> times = useCase.searchTimes(new TimesViewQuery(DateInfo.fromDate(date)));
+    public void addTimes(@RequestParam(value = "date", required = false) String dateStr, Model model) {
+        DateInfo date;
+        if (StringUtils.isNotBlank(dateStr)) {
+            date = DateUtils.parseDate(dateStr);
+        } else {
+            date = DateInfo.fromDate(LocalDateTime.now());
+        }
+        List<PublicVisitTimeInfo> times = useCase.searchTimes(new TimesViewQuery(date));
         model.addAttribute("times", times);
     }
 
@@ -42,4 +49,5 @@ public class ListTimesToPatientsWebAdapter {
     public void addPatientTimeRequest(Model model) {
         model.addAttribute("info", new AppointmentInfo());
     }
+
 }

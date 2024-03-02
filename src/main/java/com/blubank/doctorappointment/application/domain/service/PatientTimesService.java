@@ -18,6 +18,6 @@ public class PatientTimesService implements PatientTimesUseCase {
 
     @Override
     public List<PublicVisitTimeInfo> viewTimes(@NotNull PatientTimesQuery query) {
-        return loadVisitTimePort.loadPatientTimes(query.phone());
+        return loadVisitTimePort.loadPatientTimes(query.phone().number());
     }
 }

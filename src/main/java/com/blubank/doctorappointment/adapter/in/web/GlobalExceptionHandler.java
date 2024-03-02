@@ -23,10 +23,9 @@ public class GlobalExceptionHandler {
 //        return new ModelAndView("/clinic", HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
-    public String unHandledExceptions(Exception e,  RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-        return "redirect:/clinic";
-//        return new ModelAndView("/clinic", HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public String unHandledExceptions(Exception e,  RedirectAttributes redirectAttributes) {
+//        redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+//        return "redirect:/clinic";
+//    }
 }

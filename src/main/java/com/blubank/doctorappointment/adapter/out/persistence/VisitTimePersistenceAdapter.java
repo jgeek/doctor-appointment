@@ -43,14 +43,14 @@ public class VisitTimePersistenceAdapter implements UpdateVisitTimePort, LoadVis
 
     @Override
     public List<PublicVisitTimeInfo> loadTimesForPatients(LocalDateTime date) {
-        return loadDoctorTimes(date).stream()/*.filter(t -> !t.isTaken())*/
+        return loadDoctorTimes(date).stream()
                 .map(t -> new PublicVisitTimeInfo(t.getId().id(), t.getStart(), t.getEnd(), t.isTaken())).toList();
     }
 
     @Override
     public List<PublicVisitTimeInfo> loadPatientTimes(String phoneNumber) {
-        List<PublicVisitTimeInfo> times = visitTimeRepository.findPatientTimes(phoneNumber);
-        return times.stream().map(t -> new PublicVisitTimeInfo(t.getId(), t.getStart(), t.getEnd(), true)).toList();
+        List<VisitTimeEntity> times = visitTimeRepository.findPatientTimes(phoneNumber);
+        return times.stream().map(t -> new PublicVisitTimeInfo(t.getId(), t.getOpenTime(), t.getEndTime(), true)).toList();
     }
 
 

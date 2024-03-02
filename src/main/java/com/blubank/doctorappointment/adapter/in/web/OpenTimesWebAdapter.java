@@ -25,8 +25,8 @@ public class OpenTimesWebAdapter {
     public String openTimes(@RequestParam(value = "date") String dateStr,
                             @RequestParam(value = "startTime") String startTime,
                             @RequestParam(value = "endTime") String endTime, Model model) {
-        DateTimeDto open = DateUtils.parseDate(dateStr, startTime);
-        DateTimeDto end = DateUtils.parseDate(dateStr, endTime);
+        DateTimeDto open = DateUtils.parseDateTime(dateStr, startTime);
+        DateTimeDto end = DateUtils.parseDateTime(dateStr, endTime);
         var command = new OpenTimeCommand(open, end);
         openTimeServiceUseCase.openTimePeriod(command);
         return "redirect:/clinic";

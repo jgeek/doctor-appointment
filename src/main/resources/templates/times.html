@@ -24,6 +24,14 @@
         <span th:text="${message}"></span>
     </div>
 
+    <form method="get">
+        <h3>Pick a date to filter the times:</h3>
+        <div style="display: inline-flex;margin: 10px">
+            <input type="date" name="date" style="margin-left: 10px;" id="datePicker2" value="2024-3-3">
+            <button type="submit" class="btn btn-primary" th:action="@{/clinic/times}">Search</button>
+        </div>
+    </form>
+
     <form method="POST" th:action="@{/take}" th:object="${info}" id="appointmentForm">
 
         <div th:if="${#fields.hasAnyErrors()}">
@@ -34,12 +42,13 @@
 
         <!--        <li th:each="err : ${fields}" th:text="${err}" />-->
 
-        <div class="bd-example" style="width: 400px;border: solid #f7f7f9;margin: 10px;padding: 10px;">
+        <div class="bd-example" style="width: 450px;border: solid #f7f7f9;margin: 10px;padding: 10px;">
             <div th:if="${#fields.hasErrors()}">
                 <span class="validationError">
                   Please correct the problems below and resubmit.
                 </span>
             </div>
+            <h3>Fill your information and select a time:</h3>
             <div class="form-group">
                 <label for="name">Full name:</label>
                 <input type="text" class="form-control" id="name" placeholder="full name" th:field="*{name}">

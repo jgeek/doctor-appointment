@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Clinic Home Page</title>
+</head>
+<body>
+
+<h1> Welcome Dear Patient</h1>
+
+<div class="alert alert-danger" role="alert" th:if="${errorMessage != null or errors != null }"
+     style="width: 300px;margin: 10px;">
+    <span th:text=" ${errorMessage}" th:if="${errorMessage != null}"></span>
+
+    <div th:if="${errors != null}">
+        <ul>
+            <li th:each="var : ${errors?.getAllErrors}">
+                <td th:text="${var.field}"></td>
+                <td th:text="${var.defaultMessage}"></td>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <form method="GET" th:action="@{patient/times}">
+        <div style="display: inline-flex">
+            <span>Please enter your phone number </span>
+            <input type="text" name="phone" placeholder="091xxxxxx"/>
+
+        </div>
+    </form>
+</div>
+
+<br/>
+<table id="times">
+    <tr>
+        <th>#</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+    <tr th:each="time : ${times}">
+        <td><span th:text="${time.id}"/></td>
+        <td><span th:text="${time.start.year}"/>-
+            <span th:text="${time.start.monthValue}"/>-
+            <span th:text="${time.start.dayOfMonth}"/>
+        </td>
+        <!--            <td><span th:text="${#dates.format(time.start.toLocalDate(), 'yyyy-MM-dd HH:mm:ss')}"/></td>-->
+        <td><span th:text="${time.end.year}"/>-
+            <span th:text="${time.end.monthValue}"/>-
+            <span th:text="${time.end.dayOfMonth}"/>
+        </td>
+    </tr>
+</table>
+
+<script>
+
+</script>
+
+</body>
+</html>
+

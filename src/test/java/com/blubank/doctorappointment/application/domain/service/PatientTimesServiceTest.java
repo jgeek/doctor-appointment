@@ -2,6 +2,7 @@ package com.blubank.doctorappointment.application.domain.service;
 
 import com.blubank.doctorappointment.application.domain.model.PublicVisitTimeInfo;
 import com.blubank.doctorappointment.application.port.in.PatientTimesQuery;
+import com.blubank.doctorappointment.application.port.in.PhoneNumber;
 import com.blubank.doctorappointment.application.port.out.LoadVisitTimePort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ public class PatientTimesServiceTest {
         String phoneNumber = "123";
         given(loadVisitTimePort.loadPatientTimes(eq(phoneNumber)))
                 .willReturn(List.of(timeInfo));
-        PatientTimesQuery command = new PatientTimesQuery(phoneNumber);
+        PatientTimesQuery command = new PatientTimesQuery(new PhoneNumber(phoneNumber));
         List<PublicVisitTimeInfo> times = patientTimesService.viewTimes(command);
         Assertions.assertEquals(1, times.size());
         Assertions.assertEquals(List.of(timeInfo), times);

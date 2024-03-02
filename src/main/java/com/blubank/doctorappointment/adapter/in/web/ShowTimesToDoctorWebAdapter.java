@@ -9,12 +9,8 @@ import com.blubank.doctorappointment.common.WebAdapter;
 import com.blubank.doctorappointment.common.dto.DateTimeDto;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +60,7 @@ public class ShowTimesToDoctorWebAdapter {
 
     @GetMapping("/times")
     public String getTimes(@RequestParam(value = "date") String dateStr, Model model) {
-        DateTimeDto date = DateUtils.parseDate(dateStr, "0:0");
+        DateTimeDto date = DateUtils.parseDateTime(dateStr, "0:0");
         var times = viewDoctorTimesUseCase.viewTimes(new DoctorTimesQuery(date));
         model.addAttribute("times", times);
         return "redirect:/clinic";
@@ -78,7 +74,7 @@ public class ShowTimesToDoctorWebAdapter {
     public void addTimes(@RequestParam(value = "date", required = false) String dateStr, Model model) {
         DateTimeDto date;
         if (StringUtils.isNotBlank(dateStr)) {
-            date = DateUtils.parseDate(dateStr, "0:0");
+            date = DateUtils.parseDateTime(dateStr, "0:0");
         } else {
             date = dayOf(LocalDateTime.now());
         }

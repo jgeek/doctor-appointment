@@ -16,5 +16,5 @@ public interface VisitTimeRepository extends JpaRepository<VisitTimeEntity, Long
     List<Object[]> findADayTimes(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
     @Query("select v from VisitTimeEntity v where v.patient.phoneNumber = :phoneNumber")
-    List<PublicVisitTimeInfo> findPatientTimes(@Param("phoneNumber") String phoneNumber);
+    List<VisitTimeEntity> findPatientTimes(@Param("phoneNumber") String phoneNumber);
 }
