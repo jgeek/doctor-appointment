@@ -1,18 +1,20 @@
 # Doctor Appointment
 
-# Architecture
+## Architecture
 
 In this project I tried to implement Port and Adapter architecture and some do DDD practices.
 By the way the code need some refactoring.
 
-# Tests
+## Tests
 
 All test cases are implemented. Unit, integration and some system tests are written.
+<br/> **ArchUnit** library is used to check the dependency between **hexagon** layers.
 
-# UI
+## UI
 
 I designed UI part with the help of Spring MVC and Thymeleaf, but I regret. I could do it easier with
-client side technologies such as react js.
+client side technologies such as react js. By the way error handling is not implemented well. 
+Because I was far from UI development.
 <br/>Application has 3 pages:
 
 - [ ] http://localhost:8080/appointment/times:
