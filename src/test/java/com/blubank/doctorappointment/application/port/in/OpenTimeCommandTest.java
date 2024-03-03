@@ -1,6 +1,6 @@
 package com.blubank.doctorappointment.application.port.in;
 
-import com.blubank.doctorappointment.application.domain.service.InvalidTimeException;
+import com.blubank.doctorappointment.common.exception.InvalidTimeException;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

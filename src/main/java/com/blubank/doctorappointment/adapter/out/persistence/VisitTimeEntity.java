@@ -1,6 +1,5 @@
 package com.blubank.doctorappointment.adapter.out.persistence;
 
-import com.blubank.doctorappointment.application.domain.model.PatientId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

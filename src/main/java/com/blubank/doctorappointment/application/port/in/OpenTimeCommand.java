@@ -1,11 +1,8 @@
 package com.blubank.doctorappointment.application.port.in;
 
-import com.blubank.doctorappointment.application.domain.service.InvalidTimeException;
+import com.blubank.doctorappointment.common.exception.InvalidTimeException;
 import com.blubank.doctorappointment.common.dto.DateTimeDto;
 import jakarta.validation.constraints.NotNull;
-import lombok.Value;
-
-import java.time.LocalDateTime;
 
 import static com.blubank.doctorappointment.common.validation.Validation.validate;
 

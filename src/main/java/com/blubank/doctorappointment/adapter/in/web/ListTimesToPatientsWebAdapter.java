@@ -27,10 +27,7 @@ public class ListTimesToPatientsWebAdapter {
 
     @GetMapping()
     public String homePage() {
-
-//        ShowTimesToDoctorWebAdapter.handleErrors(model);
         return "times";
-//        return view;
     }
 
     @ModelAttribute

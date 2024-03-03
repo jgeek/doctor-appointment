@@ -1,8 +1,7 @@
 package com.blubank.doctorappointment.adapter.in.web;
 
-import com.blubank.doctorappointment.application.domain.service.InvalidTimeException;
+import com.blubank.doctorappointment.common.exception.InvalidTimeException;
 import com.blubank.doctorappointment.common.exception.TimesForDayAlreadyOpened;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;

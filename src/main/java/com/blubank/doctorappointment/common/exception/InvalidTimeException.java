@@ -1,4 +1,4 @@
-package com.blubank.doctorappointment.application.domain.service;
+package com.blubank.doctorappointment.common.exception;
 
 public class InvalidTimeException extends RuntimeException {
     public InvalidTimeException() {

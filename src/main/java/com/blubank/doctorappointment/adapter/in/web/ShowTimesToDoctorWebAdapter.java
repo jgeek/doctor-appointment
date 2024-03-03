@@ -25,7 +25,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ShowTimesToDoctorWebAdapter {
 
-    private final OpenTimeServiceUseCase openTimeServiceUseCase;
     private final ViewDoctorTimesUseCase viewDoctorTimesUseCase;
 
     @GetMapping()
@@ -36,7 +35,7 @@ public class ShowTimesToDoctorWebAdapter {
     }
 
     static void handleErrors(Model model) {
-        if (model.asMap().containsKey("errors")) {
+//        if (model.asMap().containsKey("errors")) {
 //            model.addAttribute("fields.errors", model.asMap().get("errors"));
 //            view.addObject("fields", ((BeanPropertyBindingResult) model.asMap().get("errors")).getAllErrors());
 
@@ -55,7 +54,7 @@ public class ShowTimesToDoctorWebAdapter {
             model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "errors", bindingResult);
             */
 
-        }
+//        }
     }
 
     @GetMapping("/times")
