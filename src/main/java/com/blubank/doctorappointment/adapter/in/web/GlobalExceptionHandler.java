@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     }
 
 //    @ExceptionHandler(Exception.class)
-//    public String unHandledExceptions(Exception e,  RedirectAttributes redirectAttributes) {
+//    public String unHandledExceptions(Exception e,  RedirectAttributes redirectAttributes, Model model) {
 //        redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 //        return "redirect:/clinic";
 //    }
